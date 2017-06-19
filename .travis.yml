@@ -1,0 +1,15 @@
+language: java
+install: true
+matrix:
+  include:
+  - jdk: oraclejdk8
+script:
+- javac -d . src/*.java
+- jar cfe cg-ww.jar Referee *.class
+deploy:
+  provider: releases
+  api_key:
+    secure: FL1iKceoYaBSpigTcawxNQHywKqkeFHJqLY2OKd7W010cUXHFABAmPIPsRgLDsX+uIaPu3VKHeuLbuLolIoGSyibhiPz6Z9WhwZpIqucsdUTOs7vKqp7O+GYHFNHFH6EPZHVi21TGyCNuSeNu0PLKJn08E2U1y7O9VxCmbozkRYL7+pwPyFse1gAooYzDgqPn9Vyz71/mTQ/RndfkXSH8vVAk3Pd0tHrZMzmxMzGu2thOoBeA+fvCNOVCpglX0fHi/94SS/xGBUxWRLHmGMpkSKimCKFMGbJkb5F82UeIv972J+pfQjTvpSSai7JmNRGT5LdfxoBh30QVdf2GIGXd3Ch8jxSylOguF0s/rexJ8MJK3Vu0sc05+JoyKQhUjLAfBOTPiIj+me1SlrvELr/ZFYD73txqLqvUAzu0cDvaZi4mZ5xnnXUI5L5Krg5O9n4ztRutkLNjV6VLTOoCGJntVTy8SZrUFy2RK6Su/eCDGFIMckCoO+jJozeWMrc04496Rnev45snoWmkHZicvh4wDKqGZeAZxgsESXl5sYEyS+DSdS/kziCYPdNyh1FDnEjVQyrF+OikvbtBjLPMkt8mTokFd0MTQSlTLeK/KheMpS4h858Is4uSt56Vtpbn4YjsDitEXhcNQJKxWDQIfMVRbgRfP3xOVrIaseaCWsOOu4=
+  file: cg-ww.jar
+  on:
+    tags: true
