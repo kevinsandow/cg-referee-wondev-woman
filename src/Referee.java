@@ -12,7 +12,7 @@ import static java.util.stream.Stream.of;
 import static java.util.stream.Collectors.joining;
 
 class Referee extends MultiReferee {
-    public static int GAME_VERSION = 0;
+    public static int GAME_VERSION = 3;
 
     static final Pattern PLAYER_PATTERN = Pattern.compile(
             "^(?<action>MOVE\\&BUILD|PUSH\\&BUILD)\\s+(?<index>\\d)\\s+(?<move>N|S|W|E|NW|NE|SW|SE)\\s+(?<place>N|S|W|E|NW|NE|SW|SE)(?:\\s+)?(?:\\s+(?<message>.+))?",
@@ -1254,8 +1254,11 @@ abstract class AbstractReferee {
                     playerStatus.lost = true;
                     playerStatus.info = e.getReason();
                     playerStatus.reasonCode = e.getReasonCode();
-                    lastPlayer = playerStatus;
-                    throw new GameOverException(null);
+					boolean otherPlayerIsDead = lastPlayer.lost;
+					lastPlayer = playerStatus;
+					//only end the game, if both players are dead
+					if (otherPlayerIsDead)
+						throw new GameOverException(null);
                 }
             }
         } catch (GameOverException e) {
