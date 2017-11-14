@@ -1176,17 +1176,23 @@ abstract class AbstractReferee {
 
     @SuppressWarnings("resource")
     public void start() throws IOException {
+        Scanner s = new Scanner(is);
+        String firstLine = s.nextLine();
+
         try {
-            handleInitInputForReferee(2, new String[0]);
+            if (firstLine.startsWith("###Seed")) {
+                String seed = firstLine.substring(8);
+                handleInitInputForReferee(2, new String[] { "seed=" + seed });
+                s.nextLine(); // Read ##Start
+            } else {
+                // First line is ##Start
+                handleInitInputForReferee(2, new String[0]);
+            }
         } catch (InvalidFormatException e) {
             return;
         }
 
-        Scanner s = new Scanner(is);
-
         try {
-            // Read ###Start 2
-            s.nextLine();
             playerCount = alivePlayerCount = 2;
             players = new PlayerStatus[2];
             players[0] = new PlayerStatus(0);
